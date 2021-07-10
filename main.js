@@ -1,10 +1,18 @@
 const app = Vue.createApp({
   data() {
     return {
+      styles: {
+        padding: "15px",
+        fontSize: "18px",
+        border: "none",
+        backgroundColor: "#cfcfcf",
+        "border-radius": "6px",
+      },
       cart: 0,
       product: "Socks",
       image: "./assets/images/socks_green.jpg",
-      inventory: 100,
+      inventory: 0,
+      inStock: true,
       onSale: true,
       details: ["50% cotton", "30% wool", "20% poliester"],
       variants: [
