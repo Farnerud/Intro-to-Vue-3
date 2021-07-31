@@ -71,12 +71,10 @@ app.component("product-display", {
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].id); // this emits or bubbling up the event to the rest of the app
     },
     dropOfCart() {
-      if (this.cart > 0) {
-        this.cart -= 1;
-      }
+      this.$emit("drop-of-cart");
     },
     updateVariant(index) {
       this.selectedVariant = index;
