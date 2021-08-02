@@ -5,41 +5,44 @@ app.component("product-display", {
       required: true,
     },
   },
-  template: /*html*/ `<div class="product-display">
-        <div class="product-container">
-          <div class="product-image">
-            <img :src="image" alt="" />
-          </div>
-          <div class="product-info">
-            <h1>{{ title }}</h1>
-            <p v-if="onSale">{{ onSaleMsg }}</p>
-            <p v-if="inStock">In Stock</p>
-            <p v-else>Out of stock</p>
+  template: /*html*/ `
+  <div class="product-display">
+    <div class="product-container">
+      <div class="product-image">
+        <img :src="image" alt="" />
+      </div>
+      <div class="product-info">
+        <h1>{{ title }}</h1>
+        <p v-if="onSale">{{ onSaleMsg }}</p>
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Out of stock</p>
 
-						<p>Shipping: {{ shipping }}</p>
+        <p>Shipping: {{ shipping }}</p>
 
-            <div
-              v-for="(variant, index) in variants"
-              :key="variant.id"
-              @mouseover="updateVariant(index)"
-              class="color-circle"
-              :style="{ 'background-color': variant.color}"
-            ></div>
+        <div
+          v-for="(variant, index) in variants"
+          :key="variant.id"
+          @mouseover="updateVariant(index)"
+          class="color-circle"
+          :style="{ 'background-color': variant.color}"
+        ></div>
 
-            <button
-              class="button"
-              :class="{disabledButton: !inStock}"
-              @click="addToCart"
-              :disabled="!inStock"
-            >
-              Add to Cart
-            </button>
-            <button :style="styles" @click="dropOfCart">
-              <small>Decrease quantity</small>
-            </button>
-          </div>
-        </div>
-    </div>`,
+        <button
+          class="button"
+          :class="{disabledButton: !inStock}"
+          @click="addToCart"
+          :disabled="!inStock"
+        >
+          Add to Cart
+        </button>
+        <button :style="styles" @click="dropOfCart">
+          <small>Decrease quantity</small>
+        </button>
+      </div>
+    </div>
+    <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
+  </div>`,
   data() {
     return {
       styles: {
@@ -67,6 +70,7 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      reviews: [],
     };
   },
   methods: {
@@ -78,6 +82,9 @@ app.component("product-display", {
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
   computed: {
